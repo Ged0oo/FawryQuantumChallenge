@@ -5,56 +5,32 @@ It demonstrates product management, cart operations, checkout, and shipping logi
 
 ## Class Overview
 
-### Product (abstract)
-- **Fields:** `name`, `price`, `quantity`
-- **Description:** Base class for all products.
-
-### Cheese, Biscuits
-- **Extends:** `Product`
-- **Implements:** `Shippable`, `Expirable`
-- **Fields:** `weight`, `expiry`
-- **Description:** Perishable and shippable products.
-
-### TV
-- **Extends:** `Product`
-- **Implements:** `Shippable`
-- **Fields:** `weight`
-- **Description:** Shippable, non-expirable product.
-
-### ScratchCard
-- **Extends:** `Product`
-- **Description:** Non-shippable, non-expirable product.
-
-### Shippable (interface)
-- **Methods:** `getName()`, `getWeight()`
-- **Description:** For products that require shipping.
-
-### Expirable (interface)
-- **Methods:** `isExpired()`
-- **Description:** For products that can expire.
-
-### Customer
-- **Fields:** `name`, `balance`
-- **Methods:** `pay(int amount)`
-- **Description:** Represents a customer with a balance.
-
-### Cart
-- **Fields:** List of `CartItem` or map of `Product` to quantity
-- **Methods:** `add(Product, int)`, `isEmpty()`, `getItems()`
-- **Description:** Holds products and quantities for checkout.
+### Item
+- **Fields:** `name`, `price`, `weight`
+- **Description:** Represents a product in the system. Does not track quantity or expiry in the current implementation.
 
 ### CartItem
-- **Fields:** `Product`, `quantity`
-- **Methods:** `getTotalPrice()`, `getTotalWeight()`
-- **Description:** Represents a product and its quantity in the cart.
+- **Fields:** `Item item`, `int quantity`
+- **Methods:** `getItem()`, `getQuantity()`, `getTotalPrice()`, `getTotalWeight()`
+- **Description:** Represents an item and its quantity in the cart.
+
+### Cart
+- **Fields:** `List<CartItem> items`
+- **Methods:** `add(Item, int)`, `getItems()`, `isEmpty()`
+- **Description:** Holds cart items and provides methods to add items and check if the cart is empty.
+
+### Customer
+- **Fields:** `name`
+- **Description:** Represents a customer. The current implementation does not track balance.
 
 ### Checkout
 - **Methods:** `checkout(Customer, Cart)`
-- **Description:** Handles checkout logic, prints shipment and receipt, checks for errors.
-
-### ShippingService
-- **Methods:** `ship(List<Shippable>)`
-- **Description:** Handles shipping of shippable products.
+- **Description:** Handles checkout logic, prints shipment and receipt.  
+  - Prints a shipment notice for Cheese and Biscuits only.
+  - Calculates subtotal and adds a fixed shipping fee (30).
+  - Prints a formatted receipt.
+  - Handles empty cart and null checks for customer/cart.
+  - Does not check for product expiry, stock, or customer balance.
 
 ---
 
@@ -101,6 +77,7 @@ Below is a screenshot of compiling and running the project:
 
 ## Notes
 
-- The system checks for product expiry, stock, and customer balance.
-- Only shippable items are included in the shipment notice.
-- Only available and non-expired products can be added to the cart.
+- The system prints a shipment notice only for Cheese and Biscuits.
+- Shipping fee is fixed at 30.
+- No checks for product expiry, stock, or customer balance are implemented.
+- Only the items Cheese and Biscuits are considered shippable in the
