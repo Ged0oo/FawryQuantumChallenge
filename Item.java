@@ -1,12 +1,13 @@
 
 public class Item {
     private String name;
-    private int price; // in currency units
-    private int weight; // in grams
+    private int price; 
+    private int weight;
 
     public Item(String name, int price, int weight) {
         if (name == null || name.trim().isEmpty())
             throw new IllegalArgumentException("Item name cannot be null or empty");
+			
         if (price < 0 || weight < 0)
             throw new IllegalArgumentException("Price and weight must be non-negative");
 
